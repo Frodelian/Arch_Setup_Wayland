@@ -532,6 +532,11 @@ Include = /etc/pacman.d/mirrorlist
 ```
 sudo pacman -Suy
 ```
+## Настроим zsh
+Цветной cat, учучшение df, цветной la
+```
+sudo pacman -S bat duf exa
+```
 ## Устанавливаем paru
 [↑ К оглавлению](#toc)
 
@@ -543,6 +548,14 @@ cd paru
 ```
 ```
 makepkg -si
+```
+## Установим dwl
+Скачиваем последний стабильный релиз
+```
+wget https://codeberg.org/dwl/dwl/archive/v0.7.tar.gz
+```
+```
+tar xf v0.7.tar.gz
 ```
 ## Установим timeshift 
 ```
