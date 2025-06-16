@@ -702,7 +702,7 @@ MODULES=(btrfs nvidia nvidia_modeset nvidia_uvm nvidia_drm)
 HOOKS=(base udev autodetect microcode modconf block keyboard keymap consolefont filesystems fsck)
 ```
 ```
-mkinitcpio -P
+sudo mkinitcpio -P
 ```
 ## Установим dwl
 Скачиваем последний стабильный релиз
