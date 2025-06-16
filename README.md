@@ -465,11 +465,11 @@ ping linux.org
 ## Подключаемся по ssh
 Проверяем, что демон SSH запущен 
 ```
-systemctl status sshd
+sudo systemctl status sshd
 ```
 Если демон выключен то вводим следующую команду, затем повторяем предыдущую
 ```
-systemctl start sshd
+sudo systemctl start sshd
 ```
 Узнаем ip-адрес нашего устройства для подключения по ssh
 ```
