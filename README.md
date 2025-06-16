@@ -573,7 +573,7 @@ fs-type = swap
 ```
 Перезапустим после наших изменений 
 ```
-sudo systemctl deamon-reexec
+sudo systemctl daemon-reexec
 ```
 ```
 sudo systemctl start /dev/zram0
