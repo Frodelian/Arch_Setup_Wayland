@@ -673,10 +673,10 @@ sudo pacman -S mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-mesa-lay
 ```
 Установим драйвера NVIDIA, перед установкой рекомендуется отключить "Secure Boot" в UEFI, ибо из-за этого модули драйвера могут не загрузиться
 ```
-opencl-nvidia libxnvctrl - с wayland не ставить
+opencl-nvidia libxnvctrl nvidia-settings - с wayland не ставить
 ```
 ```
-sudo pacman -S nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings lib32-opencl-nvidia vulkan-icd-loader lib32-vulkan-icd-loader libva-nvidia-driver
+sudo pacman -S nvidia-dkms nvidia-utils lib32-nvidia-utils lib32-opencl-nvidia vulkan-icd-loader lib32-vulkan-icd-loader libva-nvidia-driver
 ```
 Для btrfs отредактируем файлик mkinitcpio.conf
 ```
