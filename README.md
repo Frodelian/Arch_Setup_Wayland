@@ -629,12 +629,12 @@ AutoEnable=true
 ```
 sudo pacman -S ly alacritty telegram-desktop keepassxc thunar ttf-jetbrains-mono-nerd ttf-jetbrains-mono
 ```
-## Устанока драйверов 
+## Настройка звука и уменьшение задержек
 [↑ К оглавлению](#toc)
 
 Устанавливаем PipeWire для работы звука
 ```
-sudo pacman -S pipewire-jack lib32-pipewire gst-plugin-pipewire pipewire-pulse
+sudo pacman -S pipewire-jack gst-plugin-pipewire
 ```
 ```
 systemctl --user enable --now pipewire pipewire-pulse wireplumber
@@ -664,9 +664,23 @@ default.clock.allowed-rates = [ 44100 48000 96000 192000 ]
 }
 ```
 Чтобы узнать весь диапозон частот доступных для вашего устройства, следует использовать данную команду. Частоты, которые были получены таким образом, нужно прописать через пробел взамен тех, что даны в примере выше
+
+Звуковой чип
 ```
 cat /proc/asound/card0/codec\#0 | grep -A 8 "Audio Output" -m 1 | grep rates
 ```
+ЦАП
+```
+cat /proc/asound/card0/stream0 | grep Rates | uniq
+```
+Микширование стерео в 5.1
+```
+mkdir -p ~/.config/pipewire/pipewire-pulse.conf.d ~/.config/pipewire/client-rt.conf.d
+cp /usr/share/pipewire/client-rt.conf.avail/20-upmix.conf ~/.config/pipewire/pipewire-pulse.conf.d
+cp /usr/share/pipewire/client-rt.conf.avail/20-upmix.conf ~/.config/pipewire/client-rt.conf.d
+```
+
+## Установка драйверов для видеокарты 
 Установим драйвера AMD
 ```
 sudo pacman -S mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-mesa-layers opencl-rusticl-mesa lib32-opencl-rusticl-mesa
