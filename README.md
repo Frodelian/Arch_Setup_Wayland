@@ -707,10 +707,10 @@ sudo mkinitcpio -P
 ## Установим dwl
 Сначала установим зависимости 
 ```
-sudo pacman -S libinput wayland xkbcommon wayland-protocols pkg-config pixman fcft
+sudo pacman -S libinput wayland wayland-protocols pkg-config pixman fcft
 ```
 ```
-paru -S wlroots(nvidia) 
+paru -S wlroots-nvidia
 ```
 Скачиваем последний стабильный релиз
 ```
