@@ -625,448 +625,9 @@ sudo vim /etc/bluetooth/main.conf
 AutoEnable=true
 ```
 ## Установим базовые приложения 
-```
-sudo pacman -S ly alacritty telegram-desktop firefox keepassxc thunar neofetch ttf-jetbrains-mono-nerd ttf-jetbrains-mono
-```
-## Установим dwl
-Скачиваем последний стабильный релиз
-```
-wget https://codeberg.org/dwl/dwl/archive/v0.7.tar.gz
-```
-```
-tar xf v0.7.tar.gz
-```
-## Установим timeshift 
-```
-paru -S timeshift timeshift-autosnap
-```
-```
-sudo timeshift --list-devices
-```
-Создадим снимок с комментарием и с тэгом ежедневный(D) 
-```
-sudo timeshift --create --comments "[8 June 2025]" Start of Time" --tags D
-```
-Перейдём в root
-```
-sudo su
-```
-Перейдём в домашний католог 
-```
-cd ~
-```
-Укажим редактор по умолчанию
-```
-echo "export EDITOR=nvim" > .bashrc
-```
-```
-source .bashrc
-```
-```
-sudo systemctl edit --full grub-btrfsd
-```
-Изменяем строчку в файле
-```
-ExecStart=/usr/bin/grub-btrfsd --syslog -t 
-```
-```
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-```
-
-## Устанавливаем базовые приложения 
 [↑ К оглавлению](#toc)
-
 ```
-sudo pacman -S file-roller lrzip unrar unzip unace p7zip squashfs-tools xorg xorg-server xorg-xinit xdg-utils ly kitty dmenu numlockx feh telegram-desktop firefox keepassxc thunar neofetch neovim ttf-jetbrains-mono-nerd ttf-jetbrains-mono
-```
-```
-yay -S visual-studio-code-bin picom-ftlabs-git xkb-switch
-```
-```
-piper - для настройки мышки 
-zathura zathura-djvu zathura-pdf-mupdf - https://wiki.archlinux.org/title/Zathura
-xkb-switch - раскладка клавиатуры
-picom-ftlabs-git - версия picom с дополнительными функциями и улучшениями.
-lrzip unrar unzip unace p7zip squashfs-tools - архиватор через консоль
-xorg xorg-server xorg-xinit - сервер X отвечает за отображение графики
-xdg-utils - помогают приложениям взаимодействовать с окружением рабочего стола в унифицированном виде
-ly - дисплейный менеджер
-thunar - файловый менеджер
-nsxiv - для просмотра изображений
-mpv - видеопреер
-numlockx - управляет состоянием клавиши Num Lock на клавиатуре
-feh - утстанаваливает обои для рабочего стола
-telegram-desktop - месседжер 
-firefox - браузер
-flameshot - приложение для скриншотов
-keepassxc - менеджер паролей
-neofetch - информация о системе в терминале
-neovim - расширинный vim для программирования
-ttf-jetbrains-mono-nerd ttf-jetbrains-mono - шрифты
-brightnessctl - для регулировки яркости монитора
-jq - это командная утилита для обработки и фильтрации JSON в Unix-подобных системах (Linux, macOS и др.).
-Она позволяет удобно получать нужные поля из JSON-ответов, изменять или форматировать их.
-acpi - для батареи ноутбука
-```
-## Устанавливаем dunst
-[↑ К оглавлению](#toc)
-
-```
-sudo pacman -S dunst
-```
-```
-sudo mv /etc/dunst ~/.config/
-```
-Настроим уведомления о состоянии батарии ноутбука 
-```
-sudo vim /home/frodelian/.config/dunst/scripts/battery-alert
-```
-```
-#!/bin/sh
-
-# Send a notification if the laptop battery is either low or is fully charged.
-# Set on a systemd timer (~/.config/systemd/user/battery-alert.timer).
-
-export DISPLAY=:0
-export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
-
-# Battery percentage at which to notify
-WARNING_LEVEL=20
-CRITICAL_LEVEL=5
-BATTERY_DISCHARGING=$(acpi -b | grep "Battery 0" | grep -c "Discharging")
-BATTERY_LEVEL=$(acpi -b | grep -oP '\d+(?=%)' | sort -nr | head -n1)
-
-# Use files to store whether we've shown a notification or not (to prevent multiple notifications)
-FULL_FILE=/tmp/batteryfull
-EMPTY_FILE=/tmp/batteryempty
-CRITICAL_FILE=/tmp/batterycritical
-
-# Reset notifications if the computer is charging/discharging
-if [ "$BATTERY_DISCHARGING" -eq 1 ] && [ -f $FULL_FILE ]; then
-	rm $FULL_FILE
-elif [ "$BATTERY_DISCHARGING" -eq 0 ] && [ -f $EMPTY_FILE ]; then
-	rm $EMPTY_FILE
-fi
-
-# If the battery is charging and is full (and has not shown notification yet)
-if [ "$BATTERY_LEVEL" -gt 99 ] && [ "$BATTERY_DISCHARGING" -eq 0 ] && [ ! -f $FULL_FILE ]; then
-	notify-send "Battery Charged" "Battery is fully charged." -i "battery" -r 9991
-	touch $FULL_FILE
-	# If the battery is low and is not charging (and has not shown notification yet)
-elif [ "$BATTERY_LEVEL" -le $WARNING_LEVEL ] && [ "$BATTERY_DISCHARGING" -eq 1 ] && [ ! -f $EMPTY_FILE ]; then
-	notify-send "Low Battery" "${BATTERY_LEVEL}% of battery remaining." -u critical -i "battery-alert" -r 9991
-	touch $EMPTY_FILE
-	# If the battery is critical and is not charging (and has not shown notification yet)
-elif [ "$BATTERY_LEVEL" -le $CRITICAL_LEVEL ] && [ "$BATTERY_DISCHARGING" -eq 1 ] && [ ! -f $CRITICAL_FILE ]; then
-	notify-send "Battery Critical" "The computer will shutdown soon." -u critical -i "battery-alert" -r 9991
-	touch $CRITICAL_FILE
-	fi
-```
-```
-sudo vim /home/frodelian/.config/dunst/scripts/battery-charging
-```
-```
-#!/bin/sh
-
-# Send a notification when the laptop is plugged in/unplugged
-# Add the following to /etc/udev/rules.d/60-power.rules (replace USERNAME with your user)
-
-# ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="0", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/USERNAME/.Xauthority" RUN+="/usr/bin/su USERNAME -c '/home/USERNAME/.local/bin/battery-charging discharging'"
-# ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="1", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/USERNAME/.Xauthority" RUN+="/usr/bin/su USERNAME -c '/home/USERNAME/.local/bin/battery-charging charging'"
-
-export XAUTHORITY=~/.Xauthority
-export DISPLAY=:0
-export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
-
-BATTERY_STATE=$1
-BATTERY_LEVEL=$(acpi -b | grep -oP '\d+(?=%)' | sort -nr | head -n1)
-# My battery takes a couple of seconds to recognize as charging, so this is a hacky way to deal with it
-case "$BATTERY_STATE" in
-	"charging") BATTERY_CHARGING="Charging" ; BATTERY_ICON="charging" ;;
-	"discharging") BATTERY_CHARGING="Disharging" ; BATTERY_ICON="discharging" ;;
-esac
-
-# Send notification
-notify-send "${BATTERY_CHARGING}" "${BATTERY_LEVEL}% of battery charged." -u normal -i "battery-${BATTERY_ICON}" -t 5000 -r 9991
-```
-Сделаем файлы исполняемыми
-```
-sudo chmod +x battery-alert battery-charging
-```
-Создадим ещё три файла
-```
-sudo vim ~/.config/systemd/user/battery-alert.timer
-```
-```
-[Unit]
-Description=Run battery alert every 3 minutes
-
-[Timer]
-OnBootSec=3min
-OnUnitActiveSec=3min
-
-[Install]
-WantedBy=timers.target
-```
-```
-sudo vim ~/.config/systemd/user/battery-alert.service
-```
-```
-[Unit]
-Description=Battery alert script
-
-[Service]
-Type=oneshot
-ExecStart=%h/.config/dunst/scripts/battery-alert
-```
-```
-systemctl --user daemon-reload
-```
-```
-systemctl --user enable --now battery-alert.timer
-```
-```
-sudo vim /etc/udev/rules.d/60-power.rules
-```
-```
-ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="0", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/frodelian/.Xauthority", RUN+="/usr/bin/su frodelian -c '/home/frodelian/.config/dunst/scripts/battery-charging discharging'"
-ACTION=="change", SUBSYSTEM=="power_supply", ATTR{type}=="Mains", ATTR{online}=="1", ENV{DISPLAY}=":0", ENV{XAUTHORITY}="/home/frodelian/.Xauthority", RUN+="/usr/bin/su frodelian -c '/home/frodelian/.config/dunst/scripts/battery-charging charging'"
-```
-```
-sudo udevadm control --reload
-```
-```
-sudo udevadm trigger --subsystem-match=power_supply
-```
-## Устанавливаем dwm
-[↑ К оглавлению](#toc)
-
-```
-wget https://dl.suckless.org/dwm/dwm-6.5.tar.gz
-```
-```
-tar -xzvf dwm-6.5.tar.gz
-```
-```
-mv dwm-6.5/* /home/frodelian/.config/dwm
-```
-```
-rm -rf dwm-6.5
-```
-```
-sudo vim /etc/X11/xinit/xinitrc
-```
-Убираем лишнее и добавляем
-```
-exec /usr/local/bin/startdwm.sh
-```
-Настраиваем запуск при входе в систему
-```
-sudo vim /usr/share/xsessions/dwm.desktop
-```
-Содержимое файла
-```
-[Desktop Entry]
-Encoding=UTF-8
-Name=Dwm
-Comment=Dynamic window manager
-Exec=/usr/local/bin/startdwm.sh
-Icon=dwm
-Type=XSession
-```
-```
-sudo vim /usr/local/bin/startdwm.sh 
-```
-```
-#!/bin/bash
-setxkbmap -option caps:escape
-
-# Настройка мониторов 
-xrandr --output eDP-1 --mode 1920x1080 --right-of HDMI-1
-
-# Установка обоев
-feh --bg-scale ~/Pictures/alena-aenami-far-from-tomorrow-1080px.jpg
-
-# Запуск picom
-picom &
-
-# Запуск dwmblocks
-dwmblocks &
-
-# Запуск dwm
-while true; do
-    dwm 2> ~/.dwm.log
-done
-```
-Делаем его исполняемым
-```
-sudo chmod +x /usr/local/bin/startdwm.sh
-```
-Проверем что файл исполняемый(-rwxr-xr-x)
-```
-ls -l /usr/local/bin/startdwm.sh
-```
-Устанавливаем dwm после всех настроек
-```
-cd .config/dwm
-```
-```
-make
-```
-```
-sudo make clean install
-```
-Команда для установки патча
-```
-patch < название_патча
-```
-Изменяем config.h
-```
-static const char *fonts[]          = { "Jetbrains Mono NerdFont:size=8:style=Bold", "Font Awesome 6 Free Solid:size=12" };
-static const char dmenufont[]       = { "Jetbrains Mono NerdFont:size=8:style=Bold" };
-static const char col_gray1[]       = "#24273a";
-static const char col_gray2[]       = "#494d64"; 
-static const char col_gray3[]       = "#cad3f5"; 
-static const char col_gray4[]       = "#ffffff"; 
-static const char col_cyan[]        = "#8aadf4";
-#define MODKEY Mod4Mask
-#include <X11/XF86keysym.h>
-static const char *termcmd[]  = { "kitty", NULL };
-static const char *flameshot[] = { "flameshot", "gui", NULL };
-static const Key keys[] = {
-    /* modifier                         key                             function                argument */
-    { MODKEY,                           XK_d,                           spawn,                  {.v = dmenucmd } },
-    { MODKEY,                           XK_Return,                      spawn,                  {.v = termcmd } },
-    { 0,                                XK_Print,                       spawn,                  {.v = flameshot } },
-    { 0,                                XF86XK_AudioMute,               spawn,                  SHCMD("pactl set-sink-mute @DEFAULT_SINK@ toggle") },
-    { 0,                                XF86XK_AudioLowerVolume,        spawn,                  SHCMD("pactl set-sink-volume @DEFAULT_SINK@ -5%") },
-    { 0,                                XF86XK_AudioRaiseVolume,        spawn,                  SHCMD("pactl set-sink-volume @DEFAULT_SINK@ +5%") },
-    { 0,                                XF86XK_MonBrightnessUp,         spawn,                  SHCMD("brightnessctl set +10%") },
-    { 0,                                XF86XK_MonBrightnessDown,       spawn,                  SHCMD("brightnessctl set 10%-") },
-    { 0,                                XK_ISO_Next_Group,              spawn,                  SHCMD("pkill -RTMIN+1 dwmblocks") },
-    { MODKEY|ShiftMask,                 XK_Return,                      zoom,                   {0} },
-    { MODKEY|ShiftMask,                 XK_c,                           quit,                   {0} },
-```
-Устанавливаем dwmblocks
-```
-https://github.com/UtkarshVerma/dwmblocks-async?tab=readme-ov-file
-```
-Устанавливаем dmenu
-```
-https://tools.suckless.org/dmenu/
-```
-## Настройка мониторов
-```
-xrandr
-```
-```
-xrandr --listmonitors
-```
-```
-xrandr --output eDP-1 --mode 1920x1080 --primary --left-of HDMI-1 --output HDMI-1 --mode 2560x1440
-```
-## Включаем ly
-[↑ К оглавлению](#toc)
-
-```
-sudo systemctl enable ly.service
-```
-```
-sudo vim /etc/ly/config.ini
-```
-```
-sudo vim /lib/systemd/system/ly.service
-```
-Содержимое файла
-```
-[Unit]
-Description=TUI display manager
-After=systemd-user-sessions.service plymouth-quit-wait.service
-After=getty@tty2.service
-Conflicts=getty@tty2.service
-
-[Service]
-Type=idle
-ExecStartPre=/usr/bin/printf '%%b' '\e]P011121D\e]P7A9B1D6\ec'
-ExecStart=/usr/bin/ly-dm
-StandardInput=tty
-TTYPath=/dev/tty2
-TTYReset=yes
-TTYVHangup=yes
-
-[Install]
-Alias=display-manager.service
-```
-```
-reboot
-```
-Ly не рендерит шрифты сам, а использует тот, что уже задан для виртуальной консоли (tty), на которой он запускается. Консоль (tty) использует специальные bitmap-шрифты (psf.gz), а не ttf/otf.
-```
-echo "FONT=LatArCyrHeb-16" | sudo tee /etc/vconsole.conf
-```
-Здесь можно посмотреть установленные шрифты
-```
-cd /usr/share/kbd/consolefonts/
-```
-## Настройка раскладки клавиатуры для X11
-[↑ К оглавлению](#toc)
-
-```
-sudo vim /etc/X11/xorg.conf.d/00-keyboard.conf
-```
-Содержимое файла
-
-```
-Section "InputClass"
-    Identifier "system-keyboard"
-    MatchIsKeyboard "on"
-    Option "XkbLayout" "us,ru"
-    Option "XkbModel" "pc105"
-    Option "XkbOptions" "grp:alt_shift_toggle"
-EndSection
-```
-```
-reboot
-```
-## Настроим тачпад ноутбука
-[↑ К оглавлению](#toc)
-
-```
-sudo pacman -S xf86-input-synaptics
-```
-```
-cd /etc/X11/xorg.conf.d/
-```
-```
-sudo vim 70-synaptics.conf
-```
-```
-Section "InputClass"
-    Identifier "touchpad"
-    Driver "synaptics"
-    MatchIsTouchpad "on"
-        Option "TapButton1" "1"               # Один палец - левый клик
-        Option "TapButton2" "3"               # Два пальца - правый клик
-        Option "TapButton3" "2"               # Три пальца - средний клик
-        Option "RBCornerButton" "3"            # Правый клик в правом нижнем углу
-        Option "VertEdgeScroll" "on"          # Вертикальная прокрутка по краю
-        Option "HorizEdgeScroll" "on"         # Горизонтальная прокрутка по краю
-        Option "VertTwoFingerScroll" "on"     # Вертикальная прокрутка двумя пальцами
-        Option "HorizTwoFingerScroll" "on"    # Горизонтальная прокрутка двумя пальцами
-        Option "CircularScrolling" "on"        # Циркулярная прокрутка
-        Option "CircScrollTrigger" "2"         # Циркулярная прокрутка активируется двумя пальцами
-        Option "EmulateTwoFingerMinZ" "40"    # Минимальное давление для имитации двух пальцев
-        Option "EmulateTwoFingerMinW" "8"     # Минимальная ширина для имитации двух пальцев
-        Option "FingerLow" "30"                # Давление для распознавания касания
-        Option "FingerHigh" "50"               # Давление для распознавания отпускания
-        Option "MaxTapTime" "125"              # Максимальное время для распознавания касания
-        Option "VertScrollDelta" "111"         # Увеличьте значение для более быстрой прокрутки
-        Option "HorizScrollDelta" "111"        # Увеличьте значение для более быстрой прокрутки
-EndSection
-```
-Делаем файл исполняемым
-```
-sudo chmod +x 70-synaptics.conf 
+sudo pacman -S ly alacritty telegram-desktop keepassxc thunar ttf-jetbrains-mono-nerd ttf-jetbrains-mono
 ```
 ## Устанока драйверов 
 [↑ К оглавлению](#toc)
@@ -1115,7 +676,7 @@ sudo pacman -S mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-mesa-lay
 opencl-nvidia libxnvctrl - с wayland не ставить
 ```
 ```
-sudo pacman -S nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings lib32-opencl-nvidia opencl-nvidia libxnvctrl vulkan-icd-loader lib32-vulkan-icd-loader libva-nvidia-driver
+sudo pacman -S nvidia-dkms nvidia-utils lib32-nvidia-utils nvidia-settings lib32-opencl-nvidia vulkan-icd-loader lib32-vulkan-icd-loader libva-nvidia-driver
 ```
 Для btrfs отредактируем файлик mkinitcpio.conf
 ```
@@ -1128,147 +689,51 @@ HOOKS=(base udev autodetect modconf block filesystems keyboard fsck keymap)
 ```
 mkinitcpio -P
 ```
-## Vim
-[↑ К оглавлению](#toc)
+## Установим dwl
+Скачиваем последний стабильный релиз
+```
+wget https://codeberg.org/dwl/dwl/archive/v0.7.tar.gz
+```
+```
+tar xf v0.7.tar.gz
+```
+## Установим timeshift 
+```
+paru -S timeshift timeshift-autosnap
+```
+```
+sudo timeshift --list-devices
+```
+Создадим снимок с комментарием и с тэгом ежедневный(D) 
+```
+sudo timeshift --create --comments "[8 June 2025]" Start of Time" --tags D
+```
+Перейдём в root
+```
+sudo su
+```
+Перейдём в домашний католог 
+```
+cd ~
+```
+Укажим редактор по умолчанию
+```
+echo "export EDITOR=nvim" > .bashrc
+```
+```
+source .bashrc
+```
+```
+sudo systemctl edit --full grub-btrfsd
+```
+Изменяем строчку в файле
+```
+ExecStart=/usr/bin/grub-btrfsd --syslog -t 
+```
+```
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
 
-```
-sudo mv /etc/vimrc ~/.config/
-```
-Сохраняем внесённые изменения
-```
-:source %
-```
-## Установим oh-my-zsh
-[↑ К оглавлению](#toc)
-
-```
-sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
-```
-yay -S --noconfirm zsh-theme-powerlevel10k-git
-```
-```
-echo 'source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
-```
-```
-p10k configure
-```
-## Plugins zsh
-[↑ К оглавлению](#toc)
-
-Автозаполнение
-```
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-```
-Подсветка синтаксиса терминала
-```
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-```
-Фишка из fish
-```
-git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
-```
-Vim
-```
-git clone https://github.com/jeffreytse/zsh-vi-mode \
-  $ZSH_CUSTOM/plugins/zsh-vi-mode
-```
-Цветной cat, улучшение df, цветной la, улучшение поиска fzf
-```
-sudo pacman -S bat duf exa fzf
-```
-Цвета
-```
-yay -S --noconfirm zsh-theme-powerlevel10k-git
-```
-## Упрощение работы в терминале с помощью gum и fzf
-[↑ К оглавлению](#toc)
-
-```
-sudo pacman -S gum fzf
-```
-```
-chmod +x ~/.local/bin/pacman-menu
-или
-chmod +x ~/bin/pacman-menu
-```
-```
-#!/bin/bash
-set -e
-trap 'clear' SIGINT
-
-# Список действий
-action=$(gum choose --cursor.foreground="#f4cd76" --header.foreground="#f4cd76" --item.foreground="#F2DDC6" --selected.background="#23252e" --selected.foreground="#f4cd76" \
-  "Install" \
-  "Install from local .pkg.tar.zst file" \
-  "Update" \
-  "Upgrade" \
-  "Remove" \
-  "Autoremove (orphans)"
-)
-
-if [[ $action == "Install" ]]; then 
-  package=$(pacman -Slq | fzf --multi --cycle --reverse --preview 'pacman -Si {1} 2>/dev/null')
-  [[ -n "$package" ]] && sudo pacman -S $package
-elif [[ $action == "Remove" ]]; then 
-  package=$(pacman -Qq | fzf --multi --cycle --reverse --preview 'pacman -Qi {1} 2>/dev/null')
-  [[ -n "$package" ]] && sudo pacman -Rns $package
-elif [[ $action == "Install from local .pkg.tar.zst file" ]]; then 
-  file=$(find . -name "*.pkg.tar.zst" | fzf)
-  [[ -n "$file" ]] && sudo pacman -U "$file"
-elif [[ $action == "Update" ]]; then 
-  sudo pacman -Sy
-elif [[ $action == "Upgrade" ]]; then 
-  sudo pacman -Syu
-elif [[ $action == "Autoremove (orphans)" ]]; then 
-  orphans=$(pacman -Qdtq)
-  if [[ -n "$orphans" ]]; then
-    sudo pacman -Rns $orphans
-  else
-    gum style --foreground "#f4cd76" "No orphan packages found!"
-    sleep 2
-  fi
-fi
-```
-yay-menu
-```
-#!/bin/bash
-set -e
-trap 'clear' SIGINT
-
-# Выбор действия с помощью gum
-action=$(gum choose --cursor.foreground="#f4cd76" --item.foreground="#F2DDC6" --selected.background="#23252e" --selected.foreground="#f4cd76" \
-  "Install" \
-  "Install from local .pkg.tar.zst file" \
-  "Update" \
-  "Upgrade" \
-  "Remove" \
-  "Autoremove (orphans)"
-)
-
-if [[ $action == "Install" ]]; then
-  package=$(yay -Ss | awk -F/ '{print $1}' | awk '{print $1}' | grep -v '^$' | sort -u | fzf --multi --cycle --reverse --preview 'yay -Si {1} 2>/dev/null')
-  [[ -n "$package" ]] && yay -S $package
-elif [[ $action == "Remove" ]]; then
-  package=$(yay -Qqm | fzf --multi --cycle --reverse --preview 'yay -Qi {1} 2>/dev/null')
-  [[ -n "$package" ]] && yay -Rns $package
-elif [[ $action == "Install from local .pkg.tar.zst file" ]]; then
-  file=$(find . -name "*.pkg.tar.zst" | fzf)
-  [[ -n "$file" ]] && yay -U "$file"
-elif [[ $action == "Update" ]]; then
-  yay -Sy
-elif [[ $action == "Upgrade" ]]; then
-  yay -Syu
-elif [[ $action == "Autoremove (orphans)" ]]; then
-  orphans=$(yay -Qdtq)
-  if [[ -n "$orphans" ]]; then
-    yay -Rns $orphans
-  else
-    gum style --foreground "#f4cd76" "No orphan packages found!"
-    sleep 2
-  fi
-fi
-```
 ## Firefox
 [↑ К оглавлению](#toc)
 
