@@ -209,7 +209,7 @@ mkfs.fat -F32 /dev/nvme0n1p1
 ```
 Для root в случае btrfs
 ```
-mkfs.btrfs /dev/nvme0n1p
+mkfs.btrfs /dev/nvme0n1p2
 ```
 ```
 mount /dev/nvme0n1p2 /mnt
