@@ -558,7 +558,7 @@ paru -S --noconfirm zsh-theme-powerlevel10k-git
 sudo pacman -S zram-generator 
 ```
 ```
-mkdir -p /etc/systemd/zram-generator.conf.d/
+sudo mkdir -p /etc/systemd/zram-generator.conf.d/
 ```
 ```
 sudo vim /etc/systemd/zram-generator.conf.d/zram.conf
