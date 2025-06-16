@@ -532,11 +532,6 @@ Include = /etc/pacman.d/mirrorlist
 ```
 sudo pacman -Suy
 ```
-## Настроим zsh
-Цветной cat, учучшение df, цветной la
-```
-sudo pacman -S bat duf exa
-```
 ## Устанавливаем paru
 [↑ К оглавлению](#toc)
 
@@ -549,49 +544,14 @@ cd paru
 ```
 makepkg -si
 ```
-## Установим dwl
-Скачиваем последний стабильный релиз
+## Настроим zsh
+Цветной cat, улучшение df, цветной la, улучшение поиска fzf
 ```
-wget https://codeberg.org/dwl/dwl/archive/v0.7.tar.gz
+sudo pacman -S bat duf exa fzf
 ```
+Цвета
 ```
-tar xf v0.7.tar.gz
-```
-## Установим timeshift 
-```
-paru -S timeshift timeshift-autosnap
-```
-```
-sudo timeshift --list-devices
-```
-Создадим снимок с комментарием и с тэгом ежедневный(D) 
-```
-sudo timeshift --create --comments "[8 June 2025]" Start of Time" --tags D
-```
-Перейдём в root
-```
-sudo su
-```
-Перейдём в домашний католог 
-```
-cd ~
-```
-Укажим редактор по умолчанию
-```
-echo "export EDITOR=nvim" > .bashrc
-```
-```
-source .bashrc
-```
-```
-sudo systemctl edit --full grub-btrfsd
-```
-Изменяем строчку в файле
-```
-ExecStart=/usr/bin/grub-btrfsd --syslog -t 
-```
-```
-sudo grub-mkconfig -o /boot/grub/grub.cfg
+paru -S --noconfirm zsh-theme-powerlevel10k-git
 ```
 ## ZRAM
 ```
@@ -664,6 +624,55 @@ sudo vim /etc/bluetooth/main.conf
 ```
 AutoEnable=true
 ```
+## Установим базовые приложения 
+```
+sudo pacman -S ly alacritty telegram-desktop firefox keepassxc thunar neofetch ttf-jetbrains-mono-nerd ttf-jetbrains-mono
+```
+## Установим dwl
+Скачиваем последний стабильный релиз
+```
+wget https://codeberg.org/dwl/dwl/archive/v0.7.tar.gz
+```
+```
+tar xf v0.7.tar.gz
+```
+## Установим timeshift 
+```
+paru -S timeshift timeshift-autosnap
+```
+```
+sudo timeshift --list-devices
+```
+Создадим снимок с комментарием и с тэгом ежедневный(D) 
+```
+sudo timeshift --create --comments "[8 June 2025]" Start of Time" --tags D
+```
+Перейдём в root
+```
+sudo su
+```
+Перейдём в домашний католог 
+```
+cd ~
+```
+Укажим редактор по умолчанию
+```
+echo "export EDITOR=nvim" > .bashrc
+```
+```
+source .bashrc
+```
+```
+sudo systemctl edit --full grub-btrfsd
+```
+Изменяем строчку в файле
+```
+ExecStart=/usr/bin/grub-btrfsd --syslog -t 
+```
+```
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
 ## Устанавливаем базовые приложения 
 [↑ К оглавлению](#toc)
 
@@ -1164,9 +1173,13 @@ Vim
 git clone https://github.com/jeffreytse/zsh-vi-mode \
   $ZSH_CUSTOM/plugins/zsh-vi-mode
 ```
-Цветной cat, учучшение df, цветной la
+Цветной cat, улучшение df, цветной la, улучшение поиска fzf
 ```
-sudo pacman -S bat duf exa
+sudo pacman -S bat duf exa fzf
+```
+Цвета
+```
+yay -S --noconfirm zsh-theme-powerlevel10k-git
 ```
 ## Упрощение работы в терминале с помощью gum и fzf
 [↑ К оглавлению](#toc)
