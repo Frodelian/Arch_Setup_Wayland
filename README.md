@@ -705,12 +705,48 @@ HOOKS=(base udev autodetect microcode modconf block keyboard keymap consolefont 
 sudo mkinitcpio -P
 ```
 ## Установим dwl
+Сначала установим зависимости 
+```
+sudo pacman -S libinput wayland xkbcommon wayland-protocols pkg-config pixman fcft
+```
+```
+paru -S wlroots(nvidia) 
+```
 Скачиваем последний стабильный релиз
 ```
 wget https://codeberg.org/dwl/dwl/archive/v0.7.tar.gz
 ```
 ```
 tar xf v0.7.tar.gz
+```
+Бар для dwl
+```
+git clone https://github.com/kolunmi/dwlb
+```
+```
+cd dwlb
+make
+sudo make clean install
+```
+Создайте desktop-файл для дисплей-менеджера
+```
+/usr/share/wayland-sessions/dwl.desktop
+```
+```
+[Desktop Entry]
+Name=dwl
+Comment=Wayland compositor dwl
+Exec=/usr/local/bin/startdwl.sh
+Type=Application
+```
+```
+nvim /usr/local/bin/startdwl.sh
+```
+```
+exec dwl -s 'dwlb -font "monospace:size=16" -scale 2'
+```
+```
+sudo chmod +x /usr/local/bin/startdwl.sh
 ```
 ## Установим timeshift 
 ```
