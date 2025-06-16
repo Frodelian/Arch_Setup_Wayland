@@ -696,9 +696,10 @@ sudo pacman -S nvidia-dkms nvidia-utils lib32-nvidia-utils lib32-opencl-nvidia v
 ```
 vim /etc/mkinitcpio.conf
 ```
+Для проприетарных драйверов NVIDIA обычно НЕ рекомендуется включать kms в HOOKS, поскольку модуль nvidia не поддерживает KMS так же, как open-source драйверы.
 ```
 MODULES=(btrfs nvidia nvidia_modeset nvidia_uvm nvidia_drm)
-HOOKS=(base udev autodetect modconf block filesystems keyboard fsck keymap)
+HOOKS=(base udev autodetect microcode modconf block keyboard keymap consolefont filesystems fsck)
 ```
 ```
 mkinitcpio -P
