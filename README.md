@@ -1,6 +1,7 @@
 # Arch_Setup_Wayland
 <a name="toc"></a>
 ## Оглавление
+
 - [Загрузка образа на флешку](#загрузка-образа-на-флешку)
 - [Дополнительные настройки перед разметкой диска (также подключение по ssh)](#дополнительные-настройки-перед-разметкой-диска-также-подключение-по-ssh)
 - [Разметка диска через утилиту fdisk(больше подходит для старых BIOS)](#разметка-диска-через-утилиту-fdiskбольше-подходит-для-старых-bios)
@@ -62,6 +63,7 @@ dd if=/dev/urandom of=/dev/название_диска bs=512 count=1
 ```
 blkdiscard -f /dev/nvme0n1
 ```
+
 ## Дополнительные настройки перед разметкой диска (также подключение по ssh)
 [↑ К оглавлению](#toc)
 
@@ -263,6 +265,7 @@ lsblk
 mkdir /mnt/boot
 mount /dev/nvme0n1p1 /mnt/boot
 ```
+
 ## Установка системы 
 [↑ К оглавлению](#toc)
 
@@ -306,6 +309,7 @@ cat /mnt/etc/fstab
 ```
 arch-chroot /mnt
 ```
+
 ## Время 
 [↑ К оглавлению](#toc)
 
@@ -321,6 +325,7 @@ hwclock --systohc --utc
 ```
 date
 ```
+
 ## Язык системы 
 [↑ К оглавлению](#toc)
 
@@ -341,6 +346,7 @@ echo "LANG=en_US.UTF-8" >> /etc/locale.conf
 ```
 locale-gen
 ```
+
 ## Настройка пользователя 
 [↑ К оглавлению](#toc)
 
@@ -382,6 +388,7 @@ echo "frodelian ALL=(ALL) ALL" > /etc/sudoers.d/frodelian
 ```
 chmod 0440 /etc/sudoers.d/frodelian
 ```
+
 ## Ускорение обновления системы
 [↑ К оглавлению](#toc)
 
@@ -406,6 +413,7 @@ HOOKS=(... filesystems)
 ```
 mkinitcpio -P
 ```
+
 ## Ставим загрузчик GRUB
 [↑ К оглавлению](#toc)
 
@@ -441,6 +449,7 @@ umount -R /mnt
 ```
 reboot
 ```
+
 ## После перезагрузки
 [↑ К оглавлению](#toc)
 
@@ -462,7 +471,10 @@ ip link
 ```
 ping linux.org
 ```
+
 ## Подключаемся по ssh
+[↑ К оглавлению](#toc)
+
 Проверяем, что демон SSH запущен 
 ```
 sudo systemctl status sshd
@@ -488,6 +500,7 @@ ssh frodelian@192.168.1.13
 ```
 vim ~/.ssh/known_hosts
 ```
+
 ## Обновление ключей Arch Linux
 [↑ К оглавлению](#toc)
 
@@ -511,6 +524,7 @@ sudo pacman -Sy archlinux-keyring
 ```
 sudo systemctl enable --now archlinux-keyring-wkd-sync.timer
 ```
+
 ## Включение 32-битного репозитория
 [↑ К оглавлению](#toc)
 
@@ -532,6 +546,7 @@ Include = /etc/pacman.d/mirrorlist
 ```
 sudo pacman -Suy
 ```
+
 ## Устанавливаем paru
 [↑ К оглавлению](#toc)
 
@@ -544,7 +559,10 @@ cd paru
 ```
 makepkg -si
 ```
+
 ## Настроим zsh
+[↑ К оглавлению](#toc)
+
 Цветной cat, улучшение df, цветной la, улучшение поиска fzf
 ```
 sudo pacman -S bat duf exa fzf
@@ -553,7 +571,10 @@ sudo pacman -S bat duf exa fzf
 ```
 paru -S --noconfirm zsh-theme-powerlevel10k-git
 ```
+
 ## ZRAM
+[↑ К оглавлению](#toc)
+
 ```
 sudo pacman -S zram-generator 
 ```
@@ -582,6 +603,7 @@ sudo systemctl start /dev/zram0
 ```
 sudo lsblk
 ```
+
 ## Настроим Bluetooth
 [↑ К оглавлению](#toc)
 
@@ -624,14 +646,44 @@ sudo vim /etc/bluetooth/main.conf
 ```
 AutoEnable=true
 ```
+
 ## Установим базовые приложения 
 [↑ К оглавлению](#toc)
+
 ```
 sudo pacman -S ly alacritty telegram-desktop keepassxc thunar ttf-jetbrains-mono-nerd ttf-jetbrains-mono
 ```
 ```
 paru -S tofi
 ```
+
+## Установка драйверов для видеокарты 
+[↑ К оглавлению](#toc)
+
+Установим драйвера AMD
+```
+sudo pacman -S mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-mesa-layers opencl-rusticl-mesa lib32-opencl-rusticl-mesa
+```
+Установим драйвера NVIDIA, перед установкой рекомендуется отключить "Secure Boot" в UEFI, ибо из-за этого модули драйвера могут не загрузиться
+```
+opencl-nvidia libxnvctrl nvidia-settings - с wayland не ставить
+```
+```
+sudo pacman -S nvidia-dkms nvidia-utils lib32-nvidia-utils lib32-opencl-nvidia vulkan-icd-loader lib32-vulkan-icd-loader libva-nvidia-driver
+```
+Для btrfs отредактируем файлик mkinitcpio.conf
+```
+vim /etc/mkinitcpio.conf
+```
+Для проприетарных драйверов NVIDIA обычно НЕ рекомендуется включать kms в HOOKS, поскольку модуль nvidia не поддерживает KMS так же, как open-source драйверы.
+```
+MODULES=(btrfs nvidia nvidia_modeset nvidia_uvm nvidia_drm)
+HOOKS=(base udev autodetect microcode modconf block keyboard keymap consolefont filesystems fsck)
+```
+```
+sudo mkinitcpio -P
+```
+
 ## Настройка звука и уменьшение задержек
 [↑ К оглавлению](#toc)
 
@@ -683,31 +735,9 @@ cp /usr/share/pipewire/client-rt.conf.avail/20-upmix.conf ~/.config/pipewire/pip
 cp /usr/share/pipewire/client-rt.conf.avail/20-upmix.conf ~/.config/pipewire/client-rt.conf.d
 ```
 
-## Установка драйверов для видеокарты 
-Установим драйвера AMD
-```
-sudo pacman -S mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-mesa-layers opencl-rusticl-mesa lib32-opencl-rusticl-mesa
-```
-Установим драйвера NVIDIA, перед установкой рекомендуется отключить "Secure Boot" в UEFI, ибо из-за этого модули драйвера могут не загрузиться
-```
-opencl-nvidia libxnvctrl nvidia-settings - с wayland не ставить
-```
-```
-sudo pacman -S nvidia-dkms nvidia-utils lib32-nvidia-utils lib32-opencl-nvidia vulkan-icd-loader lib32-vulkan-icd-loader libva-nvidia-driver
-```
-Для btrfs отредактируем файлик mkinitcpio.conf
-```
-vim /etc/mkinitcpio.conf
-```
-Для проприетарных драйверов NVIDIA обычно НЕ рекомендуется включать kms в HOOKS, поскольку модуль nvidia не поддерживает KMS так же, как open-source драйверы.
-```
-MODULES=(btrfs nvidia nvidia_modeset nvidia_uvm nvidia_drm)
-HOOKS=(base udev autodetect microcode modconf block keyboard keymap consolefont filesystems fsck)
-```
-```
-sudo mkinitcpio -P
-```
 ## Установим dwl
+[↑ К оглавлению](#toc)
+
 Сначала установим зависимости 
 ```
 sudo pacman -S libinput wayland wayland-protocols pkg-config libxkbcommon
@@ -754,7 +784,10 @@ exec dwl -s 'dwlb -font "monospace:size=16" -scale 2'
 ```
 sudo chmod +x /usr/local/bin/startdwl.sh
 ```
+
 ## Установим timeshift 
+[↑ К оглавлению](#toc)
+
 ```
 paru -S timeshift timeshift-autosnap
 ```
@@ -847,6 +880,7 @@ sudo vim ~/.config/gtk-3.0/settings.ini
 gtk-cursor-theme-name=phinger-cursors-dark
 gtk-cursor-theme-size=22
 ```
+
 ## Flameshot 
 [↑ К оглавлению](#toc)
 
