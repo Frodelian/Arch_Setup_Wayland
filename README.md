@@ -710,7 +710,7 @@ sudo mkinitcpio -P
 ## Установим dwl
 Сначала установим зависимости 
 ```
-sudo pacman -S libinput wayland wayland-protocols pkg-config 
+sudo pacman -S libinput wayland wayland-protocols pkg-config libxkbcommon
 ```
 ```
 paru -S wlroots-nvidia
