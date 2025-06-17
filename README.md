@@ -629,6 +629,9 @@ AutoEnable=true
 ```
 sudo pacman -S ly alacritty telegram-desktop keepassxc thunar ttf-jetbrains-mono-nerd ttf-jetbrains-mono
 ```
+```
+paru -S tofi
+```
 ## Настройка звука и уменьшение задержек
 [↑ К оглавлению](#toc)
 
