@@ -51,10 +51,6 @@ sudo dd bs=4M if=путь/до/archlinux.iso of=/dev/название_флешк
 ```
 dd if=/dev/urandom of=/dev/название_диска bs=512 count=1
 ```
-Очищаем диск 
-```
-blkdiscard -f /dev/nvme0n1
-```
 
 ## Дополнительные настройки, поключение к wifi и подключение по ssh
 [↑ К оглавлению](#toc)
