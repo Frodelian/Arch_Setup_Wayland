@@ -710,7 +710,7 @@ sudo mkinitcpio -P
 ## Установим dwl
 Сначала установим зависимости 
 ```
-sudo pacman -S libinput wayland wayland-protocols pkg-config pixman fcft tllist
+sudo pacman -S libinput wayland wayland-protocols pkg-config 
 ```
 ```
 paru -S wlroots-nvidia
@@ -723,6 +723,9 @@ wget https://codeberg.org/dwl/dwl/archive/v0.7.tar.gz
 tar xf v0.7.tar.gz
 ```
 Бар для dwl
+```
+sudo pacman -S pixman fcft tllist
+```
 ```
 git clone https://github.com/kolunmi/dwlb
 ```
