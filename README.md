@@ -649,6 +649,7 @@ sudo pacman -S ly alacritty telegram-desktop keepassxc thunar bash-language-serv
 ```
 paru -S tofi
 ```
+
 ## Настройка zsh
 [↑ К оглавлению](#toc)
 
@@ -663,6 +664,12 @@ paru -S tofi
 Для того чтобы nvim всегда запускался через команду vim
 ```
 sudo ln -s /usr/bin/nvim /usr/local/bin/vim
+```
+```
+sudo mkdir -p /root/.config
+```
+```
+sudo cp -r ~/.config/nvim /root/.config/
 ```
 
 ## Установка драйверов для видеокарты 
