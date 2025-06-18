@@ -257,9 +257,13 @@ mount /dev/nvme0n1p1 /mnt/boot
 ## Установка системы 
 [↑ К оглавлению](#toc)
 
-Устанавливаем базовую систему
+Для ПК
 ```
-pacstrap -K /mnt base base-devel linux linux-firmware intel-ucode iucode-tool zsh networkmanager nvim git wget efibootmgr sof-firmware btrfs-progs
+pacstrap -K /mnt base base-devel linux linux-firmware intel-ucode iucode-tool zsh networkmanager nvim git wget efibootmgr sof-firmware btrfs-progs openssh
+```
+Для ноутбука 
+```
+pacstrap -K /mnt base base-devel linux linux-firmware zsh amd-ucode networkmanager nvim git wget efibootmgr sof-firmware btrfs-progs openssh
 ```
 ```
 pacstrap -K /mnt
@@ -639,7 +643,7 @@ AutoEnable=true
 [↑ К оглавлению](#toc)
 
 ```
-sudo pacman -S ly alacritty telegram-desktop keepassxc thunar ttf-jetbrains-mono-nerd ttf-jetbrains-mono
+sudo pacman -S ly alacritty telegram-desktop keepassxc thunar bash-language-server ttf-jetbrains-mono-nerd ttf-jetbrains-mono
 ```
 ```
 paru -S tofi
