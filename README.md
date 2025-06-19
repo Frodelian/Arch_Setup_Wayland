@@ -644,7 +644,7 @@ AutoEnable=true
 [↑ К оглавлению](#toc)
 
 ```
-sudo pacman -S ly alacritty telegram-desktop keepassxc thunar bash-language-server ttf-jetbrains-mono-nerd ttf-jetbrains-mono
+sudo pacman -S ly alacritty telegram-desktop keepassxc thunar bash-language-server ttf-jetbrains-mono-nerd ttf-jetbrains-mono flameshot
 ```
 ```
 paru -S tofi
