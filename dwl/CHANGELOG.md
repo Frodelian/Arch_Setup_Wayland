@@ -1,10 +1,35 @@
 # Changelog
 
+* [0.7](#0.7)
 * [0.6](#0.6)
 * [0.5](#0.5)
 
 
-## Unreleased
+## 0.7
+
+See also [0.6](#0.6) release notes. 0.7 builds against wlroots 0.18.x.
+
+### Added
+
+* Add support for the alpha-modifier-v1 protocol ([wlroots!4616][wlroots!4616]).
+* dwl now will survive GPU resets ([#601][601]).
+
+[wlroots!4616]: https://gitlab.freedesktop.org/wlroots/wlroots/-/merge_requests/4616
+[601]: https://codeberg.org/dwl/dwl/issues/601
+
+
+### Fixed
+
+* Crash when re-mapping unmapped clients.
+
+
+### Contributors
+
+Guido Cella
+Lennart Jablonka
+
+
+## 0.6
 
 ### Added
 
