@@ -760,6 +760,9 @@ sudo pacman -S libinput wayland wayland-protocols pkg-config libxkbcommon
 ```
 paru -S wlroots-nvidia
 ```
+```
+sudo pacman -S wlroots0.18
+```
 Скачиваем последний стабильный релиз
 ```
 wget https://codeberg.org/dwl/dwl/archive/v0.7.tar.gz
