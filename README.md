@@ -852,7 +852,7 @@ cd ~/.mozilla/firefox/b2ozife7.default-release/chrome/DownToneUI
 [↑ К оглавлению](#toc)
 
 ```
-yay -S phinger-cursors
+paru -S phinger-cursors
 ```
 ```
 sudo vim /usr/share/icons/default/index.theme
@@ -863,31 +863,12 @@ sudo vim /usr/share/icons/default/index.theme
 Inherits=phinger-cursors-dark
 ```
 ```
-sudo vim ~/.Xresources
-```
-Содержимое .Xresources		
-```
-Xcursor.theme: phinger-cursors-dark
-Xcursor.size: 22
-```
-```
-xrdb ~/.Xresources
-```
-```
-sudo vim /etc/X11/xinit/xinitrc
-```
-Перед запуском всего в xinitrc
-```
-export XCURSOR_THEME=phinger-cursors-dark
-export XCURSOR_SIZE=22
-```
-```
 sudo vim ~/.gtkrc-2.0
 ```
 Содержимое .gtkrc-2.0
 ```
 gtk-cursor-theme-name="phinger-cursors-dark"
-gtk-cursor-theme-size=22
+gtk-cursor-theme-size=24
 ```
 ```
 sudo vim ~/.config/gtk-3.0/settings.ini
@@ -896,7 +877,7 @@ sudo vim ~/.config/gtk-3.0/settings.ini
 ```
 [Settings]
 gtk-cursor-theme-name=phinger-cursors-dark
-gtk-cursor-theme-size=22
+gtk-cursor-theme-size=24
 ```
 
 ## Flameshot 
