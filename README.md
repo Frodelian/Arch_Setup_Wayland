@@ -553,22 +553,6 @@ cd paru
 makepkg -si
 ```
 
-## Настроим zsh
-[↑ К оглавлению](#toc)
-
-Цветной cat, улучшение df, цветной la, улучшение поиска fzf
-```
-sudo pacman -S bat duf exa fzf
-```
-Цвета
-```
-paru -S --noconfirm zsh-theme-powerlevel10k-git
-```
-Моя конфигурация 
-```
-git clone https://github.com/Frodelian/zsh
-```
-
 ## ZRAM
 [↑ К оглавлению](#toc)
 
@@ -657,6 +641,18 @@ paru -S tofi  discord_arch_electron
 ## Настройка zsh
 [↑ К оглавлению](#toc)
 
+Цветной cat, улучшение df, цветной la, улучшение поиска fzf
+```
+sudo pacman -S bat duf exa fzf
+```
+Цвета
+```
+paru -S --noconfirm zsh-theme-powerlevel10k-git
+```
+Моя конфигурация 
+```
+git clone https://github.com/Frodelian/zsh
+```
 Укажем основные пути для запуска zsh
 ```
 ~/.zshenv
@@ -701,57 +697,6 @@ HOOKS=(base udev autodetect microcode modconf block keyboard keymap consolefont 
 ```
 ```
 sudo mkinitcpio -P
-```
-
-## Настройка звука и уменьшение задержек
-[↑ К оглавлению](#toc)
-
-Устанавливаем PipeWire для работы звука
-```
-sudo pacman -S pipewire-jack gst-plugin-pipewire
-```
-```
-systemctl --user enable --now pipewire pipewire-pulse wireplumber
-```
-Ограничение максимально возможной громкости
-```
-wpctl set-volume @DEFAULT_AUDIO_SINK@ 200%
-```
-Для уменьшения задержек
-```
-sudo pacman -S realtime-privileges rtkit
-```
-```
-sudo usermod -aG realtime "$USER"
-```
-Настройка PipeWire
-```
-mkdir -p ~/.config/pipewire/pipewire.conf.d
-```
-```
-vim ~/.config/pipewire/pipewire.conf.d/10-no-resampling.conf
-```
-```
-context.properties = {
-default.clock.rate = 48000
-default.clock.allowed-rates = [ 44100 48000 96000 192000 ]
-}
-```
-Чтобы узнать весь диапозон частот доступных для вашего устройства, следует использовать данную команду. Частоты, которые были получены таким образом, нужно прописать через пробел взамен тех, что даны в примере выше
-
-Звуковой чип
-```
-cat /proc/asound/card0/codec\#0 | grep -A 8 "Audio Output" -m 1 | grep rates
-```
-ЦАП
-```
-cat /proc/asound/card0/stream0 | grep Rates | uniq
-```
-Микширование стерео в 5.1
-```
-mkdir -p ~/.config/pipewire/pipewire-pulse.conf.d ~/.config/pipewire/client-rt.conf.d
-cp /usr/share/pipewire/client-rt.conf.avail/20-upmix.conf ~/.config/pipewire/pipewire-pulse.conf.d
-cp /usr/share/pipewire/client-rt.conf.avail/20-upmix.conf ~/.config/pipewire/client-rt.conf.d
 ```
 
 ## Установим dwl
