@@ -564,6 +564,10 @@ sudo pacman -S bat duf exa fzf
 ```
 paru -S --noconfirm zsh-theme-powerlevel10k-git
 ```
+Моя конфигурация 
+```
+git clone https://github.com/Frodelian/zsh
+```
 
 ## ZRAM
 [↑ К оглавлению](#toc)
