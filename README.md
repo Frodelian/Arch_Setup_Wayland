@@ -716,15 +716,7 @@ tar xf v0.7.tar.gz
 ```
 Бар для dwl
 ```
-sudo pacman -S pixman fcft tllist
-```
-```
-git clone https://github.com/kolunmi/dwlb
-```
-```
-cd dwlb
-make
-sudo make clean install
+sudo pacman -S fcft tllist
 ```
 Создайте desktop-файл для дисплей-менеджера
 ```
@@ -741,7 +733,7 @@ Type=Application
 nvim /usr/local/bin/startdwl.sh
 ```
 ```
-exec dwl -s 'dwlb -font "monospace:size=16" -scale 2'
+exec slstatus | dwl
 ```
 ```
 sudo chmod +x /usr/local/bin/startdwl.sh
