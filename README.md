@@ -25,6 +25,7 @@
 - [Установим базовые приложения](#установим-базовые-приложения)
 - [Настройка zsh](#настройка-zsh)
 - [Установка драйверов для видеокарты](#установка-драйверов-для-видеокарты)
+- [Включаем ly](#включаем-ly)
 - [Установим dwl](#установим-dwl)
 - [Установим timeshift](#установим-timeshift)
 - [Firefox](#firefox)
@@ -692,6 +693,50 @@ HOOKS=(base udev autodetect microcode modconf block keyboard keymap consolefont 
 ```
 ```
 sudo mkinitcpio -P
+```
+
+## Включаем ly
+[↑ К оглавлению](#toc)
+
+```
+sudo systemctl enable ly.service
+```
+```
+sudo vim /etc/ly/config.ini
+```
+```
+sudo vim /lib/systemd/system/ly.service
+```
+Содержимое файла
+```
+[Unit]
+Description=TUI display manager
+After=systemd-user-sessions.service plymouth-quit-wait.service
+After=getty@tty2.service
+Conflicts=getty@tty2.service
+
+[Service]
+Type=idle
+ExecStartPre=/usr/bin/printf '%%b' '\e]P011121D\e]P7A9B1D6\ec'
+ExecStart=/usr/bin/ly-dm
+StandardInput=tty
+TTYPath=/dev/tty2
+TTYReset=yes
+TTYVHangup=yes
+
+[Install]
+Alias=display-manager.service
+```
+```
+reboot
+```
+Ly не рендерит шрифты сам, а использует тот, что уже задан для виртуальной консоли (tty), на которой он запускается. Консоль (tty) использует специальные bitmap-шрифты (psf.gz), а не ttf/otf.
+```
+echo "FONT=LatArCyrHeb-16" | sudo tee /etc/vconsole.conf
+```
+Здесь можно посмотреть установленные шрифты
+```
+cd /usr/share/kbd/consolefonts/
 ```
 
 ## Установим dwl
