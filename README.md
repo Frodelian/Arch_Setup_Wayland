@@ -673,7 +673,7 @@ sudo cp -r ~/.config/nvim /root/.config/
 
 Установим драйвера AMD
 ```
-sudo pacman -S mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-mesa-layers
+sudo pacman -S mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon vulkan-mesa-layers lib32-opencl-mesa opencl-mesa
 ```
 Установим драйвера NVIDIA, перед установкой рекомендуется отключить "Secure Boot" в UEFI, ибо из-за этого модули драйвера могут не загрузиться
 ```
