@@ -1087,9 +1087,9 @@ widget.windows.mica.popups = 0
 ```
 ~/.mozilla/firefox/b2ozife7.default-release/chrome/DownToneUI
 ```
-> Откройте > Скопируйте папку «chrome» в это место.
+Откройте > Скопируйте папку «chrome» в это место.
 Перезапустите Firefox.
-> 
+ 
 ## Курсор
 [↑ К оглавлению](#toc)
 
