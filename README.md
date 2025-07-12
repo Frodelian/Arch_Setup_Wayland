@@ -835,17 +835,17 @@ sudo pacman -S xdg-desktop-portal xdg-desktop-portal-wlr
 
 13) Новый клиент подключается вверху стека, а не встаёт на место мастер окна https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/attachtop
 
-14) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/bar
+14) Бар https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/bar
 
-15) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/hide_vacant_tags
+15) Запретить панели отображать бару при отсутствии клиентов https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/hide_vacant_tags
 
-16) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/barcolors
+16) Добавьте поддержку цветного текста статуса в панель https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/barcolors
 
-17) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/xwayland-handle-minimize
+17) Для игр https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/xwayland-handle-minimize
 
-18) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/rlimit_max
+18) Для игр https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/rlimit_max
 
-19) https://github.com/wochap/dwl/blob/v0.6-b/dwl-sloppyfocus/dwl-sloppyfocus-diff.patch
+19) Для игр https://github.com/wochap/dwl/blob/v0.6-b/dwl-sloppyfocus/dwl-sloppyfocus-diff.patch
 
 
 ## Установим timeshift 
