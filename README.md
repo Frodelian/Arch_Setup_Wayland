@@ -809,31 +809,31 @@ sudo pacman -S xdg-desktop-portal xdg-desktop-portal-wlr
 ```
 Патчи и их описание 
 
-1) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/monitorconfig
+1) Для настройки мониторов https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/monitorconfig
 
-2) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/pertag
+2) Индивидуальная настройка для каждого тега https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/pertag
 
-3) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/ipc
+3) Возможность кликать по бару https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/ipc
 
-4) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/gaps
+4) Добавляет промежутки между клиентами https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/gaps
 
-5) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/smartborders
+5) Границы окна не отображаются, если это единственное окно в мозаике. в его теге ИЛИ если окно находится в моноклевой раскладке https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/smartborders
 
-6) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/sticky
+6) Добавляет переключаемую функцию, которая делает клиент видимым для всех тегов https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/sticky
 
-7) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/push
+7) Добавляет функции pushup и pushdownдля перемещения окон в порядк https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/push
 
-8) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/focusdir
+8) Сфокусировать окно слева, справа, выше или ниже текущего сфокусированного окна https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/focusdir
 
-9) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/warpcursor
+9) Переместить курсор в центр недавно сфокусированных клиентов https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/warpcursor
 
-10) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/alwayscenter
+10) Переместить курсор в центр недавно сфокусированных клиентов https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/alwayscenter
 
-11) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/cursortheme
+11) Добавляет возможность изменять тему и размер курсораДобавляет возможность изменять тему и размер курсора https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/cursortheme
 
-12) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/autostart
+12) Возмоность автозапука для приложений https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/autostart
 
-13) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/attachtop
+13) Новый клиент подключается вверху стека, а не встаёт на место мастер окна https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/attachtop
 
 14) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/bar
 
