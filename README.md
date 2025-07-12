@@ -259,11 +259,11 @@ mount /dev/nvme0n1p1 /mnt/boot
 
 Для ПК
 ```
-pacstrap -K /mnt base base-devel linux linux-firmware linux-zen linux-zen-headers intel-ucode iucode-tool zsh networkmanager nvim git wget efibootmgr sof-firmware btrfs-progs openssh
+pacstrap -K /mnt base base-devel linux linux-firmware linux-zen linux-zen-headers intel-ucode iucode-tool zsh networkmanager nvim git wget efibootmgr sof-firmware btrfs-progs openssh hiddify
 ```
 Для ноутбука 
 ```
-pacstrap -K /mnt base base-devel linux linux-firmware linux-zen linux-zen-headers amd-ucode zsh networkmanager nvim git wget efibootmgr sof-firmware btrfs-progs openssh
+pacstrap -K /mnt base base-devel linux linux-firmware linux-zen linux-zen-headers amd-ucode zsh networkmanager nvim git wget efibootmgr sof-firmware btrfs-progs openssh hiddify acpi
 ```
 ```
 pacstrap -K /mnt
@@ -276,6 +276,7 @@ linux-zen-headers
 -------------------------------
 ДЛЯ НОУТБУКА
 amd-ucode
+acpi - информация о батариее ноутбука 
 -------------------------------
 ДЛЯ ПК
 intel-ucode
@@ -291,6 +292,7 @@ efibootmgr - утилита для управления загрузочными
 sof-firmware - прошивки для Sound Open Firmware, используемого для работы со звуковыми устройствами
 btrfs-progs - это набор утилит для работы с файловой системой Btrfs
 openssh - для подключения по ssh
+hiddify (2) - для подключения к моему прокси
 ```
 Сгнерируем файл fstab
 ```
@@ -749,6 +751,10 @@ cd /usr/share/kbd/consolefonts/
 ```
 sudo pacman -S libinput wayland wayland-protocols pkg-config libxkbcommon
 ```
+Для поддержки X11
+```
+sudo pacman -S xcb-util-wm libxcb xorg-xwayland
+```
 ```
 paru -S wlroots-nvidia
 ```
@@ -801,6 +807,46 @@ sudo pacman -S grim swappy slurp
 ```
 sudo pacman -S xdg-desktop-portal xdg-desktop-portal-wlr
 ```
+Патчи и их описание 
+
+1) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/monitorconfig
+
+2) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/pertag
+
+3) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/ipc
+
+4) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/gaps
+
+5) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/smartborders
+
+6) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/sticky
+
+7) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/push
+
+8) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/focusdir
+
+9) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/warpcursor
+
+10) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/alwayscenter
+
+11) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/cursortheme
+
+12) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/autostart
+
+13) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/attachtop
+
+14) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/bar
+
+15) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/hide_vacant_tags
+
+16) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/barcolors
+
+17) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/xwayland-handle-minimize
+
+18) https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/rlimit_max
+
+19) https://github.com/wochap/dwl/blob/v0.6-b/dwl-sloppyfocus/dwl-sloppyfocus-diff.patch
+
 
 ## Установим timeshift 
 [↑ К оглавлению](#toc)
