@@ -1071,9 +1071,25 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ## Firefox
 [↑ К оглавлению](#toc)
 
+Установить тему Firefox на Darkв: Настройки Firefox > Расширения и темы > Темы.
+Перейти к
 ```
-cd ~/.mozilla/firefox/b2ozife7.default-release/chrome/DownToneUI
+about:config
 ```
+(в строке URL) и установите:
+```
+toolkit.legacyUserProfileCustomizations.stylesheets = true
+```
+```
+widget.windows.mica.popups = 0
+```
+Перейти к about:support> Найдите «Каталог профилей»
+```
+~/.mozilla/firefox/b2ozife7.default-release/chrome/DownToneUI
+```
+> Откройте > Скопируйте папку «chrome» в это место.
+Перезапустите Firefox.
+> 
 ## Курсор
 [↑ К оглавлению](#toc)
 
