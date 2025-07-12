@@ -259,11 +259,11 @@ mount /dev/nvme0n1p1 /mnt/boot
 
 Для ПК
 ```
-pacstrap -K /mnt base base-devel linux linux-firmware intel-ucode iucode-tool zsh networkmanager nvim git wget efibootmgr sof-firmware btrfs-progs openssh
+pacstrap -K /mnt base base-devel linux linux-firmware linux-zen linux-zen-headers intel-ucode iucode-tool zsh networkmanager nvim git wget efibootmgr sof-firmware btrfs-progs openssh
 ```
 Для ноутбука 
 ```
-pacstrap -K /mnt base base-devel linux linux-firmware zsh amd-ucode networkmanager nvim git wget efibootmgr sof-firmware btrfs-progs openssh
+pacstrap -K /mnt base base-devel linux linux-firmware linux-zen linux-zen-headers amd-ucode zsh networkmanager nvim git wget efibootmgr sof-firmware btrfs-progs openssh
 ```
 ```
 pacstrap -K /mnt
@@ -271,6 +271,8 @@ base
 base-devel
 linux
 linux-firmware
+linux-zen
+linux-zen-headers
 -------------------------------
 ДЛЯ НОУТБУКА
 amd-ucode
@@ -288,6 +290,7 @@ wget - утилита для загрузки файлов из сети, под
 efibootmgr - утилита для управления загрузочными записями UEFI
 sof-firmware - прошивки для Sound Open Firmware, используемого для работы со звуковыми устройствами
 btrfs-progs - это набор утилит для работы с файловой системой Btrfs
+openssh - для подключения по ssh
 ```
 Сгнерируем файл fstab
 ```
