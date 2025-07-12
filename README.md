@@ -1071,6 +1071,10 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ## Firefox
 [↑ К оглавлению](#toc)
 
+Ссылка на тему 
+```
+https://github.com/oviung/DownToneUI-Firefox/tree/main
+```
 Установить тему Firefox на Darkв: Настройки Firefox > Расширения и темы > Темы.
 Перейти к
 ```
