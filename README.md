@@ -1093,6 +1093,7 @@ widget.windows.mica.popups = 0
 ```
 Откройте > Скопируйте папку «chrome» в это место.
 Перезапустите Firefox.
+
 Дополнительные настройки
 ```
 browser.compactmode.show = true
