@@ -998,7 +998,6 @@ xsessions = /usr/share/xsessions
 ```
 sudo vim /lib/systemd/system/ly.service
 ```
-Содержимое файла
 ```
 [Unit]
 Description=TUI display manager
@@ -1008,7 +1007,7 @@ Conflicts=getty@tty2.service
 
 [Service]
 Type=idle
-ExecStartPre=/usr/bin/printf '%%b' '\e]P011121D\e]P7A9B1D6\ec'
+ExecStartPre=/usr/bin/printf '%b' '\e]P01d2021\e]P7A6BF7E\ec'
 ExecStart=/usr/bin/ly-dm
 StandardInput=tty
 TTYPath=/dev/tty2
