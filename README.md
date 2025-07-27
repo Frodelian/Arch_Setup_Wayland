@@ -725,7 +725,7 @@ sudo mkinitcpio -P
 sudo systemctl enable ly.service
 ```
 ```
-sudo vim /etc/ly/config.ini
+sudoedit /etc/ly/config.ini
 ```
 ```
 # Ly supports 24-bit true color with styling, which means each color is a 32-bit value.
@@ -996,7 +996,7 @@ xinitrc = ~/.xinitrc
 xsessions = /usr/share/xsessions
 ```
 ```
-sudo vim /lib/systemd/system/ly.service
+sudoedit /lib/systemd/system/ly.service
 ```
 ```
 [Unit]
@@ -1022,11 +1022,18 @@ reboot
 ```
 Ly не рендерит шрифты сам, а использует тот, что уже задан для виртуальной консоли (tty), на которой он запускается. Консоль (tty) использует специальные bitmap-шрифты (psf.gz), а не ttf/otf.
 ```
-echo "FONT=LatArCyrHeb-16" | sudo tee /etc/vconsole.conf
+paru -S terminus-font
 ```
 Здесь можно посмотреть установленные шрифты
 ```
-cd /usr/share/kbd/consolefonts/
+ls /usr/share/kbd/consolefonts/
+```
+Установить шрифт
+```
+sudoedit /etc/vconsole.conf
+```
+```
+FONT=ter-222b
 ```
 
 ## Установим dwl
