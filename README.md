@@ -632,6 +632,23 @@ sudo vim /etc/bluetooth/main.conf
 ```
 AutoEnable=true
 ```
+Если что-то не работает со временем (например пишет Failed to set power on: org.bluez.Error.Blocked problem), то попробовать выполнить эти команды
+
+```
+sudo rfkill block bluetooth
+```
+
+```
+sudo rfkill unblock bluetooth
+```
+Или 
+```
+sudo systemctl stop bluetooth.service
+```
+
+```
+sudo systemctl start bluetooth.service
+```
 
 ## Установим базовые приложения 
 [↑ К оглавлению](#toc)
