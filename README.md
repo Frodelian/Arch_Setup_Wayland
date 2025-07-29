@@ -815,6 +815,10 @@ sudo pacman -S grim swappy slurp
 ```
 sudo pacman -S xdg-desktop-portal xdg-desktop-portal-wlr
 ```
+Для работы демонстарции 
+```
+sudo pacman -S xdg-desktop-portal xdg-desktop-portal-wlr
+```
 Патчи и их описание 
 
 1) Для настройки мониторов https://codeberg.org/dwl/dwl-patches/src/branch/main/patches/monitorconfig
