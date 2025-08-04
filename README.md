@@ -594,7 +594,7 @@ sudo lsblk
 [↑ К оглавлению](#toc)
 
 ```
-sudo pacman -S bluez bluez-utils
+sudo pacman -S bluez bluez-utils blueman
 ```
 ```
 lsmod | grep btusb
